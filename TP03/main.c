@@ -14,22 +14,22 @@ int main() {
         switch (t)
         {
         // Identificadores, enteros y reales
-        case 1:
-        case 2:
-        case 3:
+        case IDENTIFICADOR:
+        case ENTERO:
+        case REAL:
             printf("Token: %s \t \t lexema: %s\n", token_names[t], yytext);
             break;
         // Nueva linea
-        case 5:
+        case NUEVA_LINEA:
             printf("Token: 'NL'\n");
             break;
         // Espacio
-        case 6:
+        case ESPACIO:
             break;
         
-        case 4:
-        case 7:
-        case 9:
+        case PALABRA_RESERVADA:
+        case SIGNO_PUNTUACION:
+        case FIN_CALCULADORA:
             if (yyleng == 1) {
                 printf("Token: '%c'\n", yytext[0]);
             } else {
@@ -37,13 +37,14 @@ int main() {
             }
             break;
         
-        
+        // Errores
         default:
                 printf("Error lexico: %s: %s\t\t\n", token_names[t],yytext);
             break;
         }
         
     };
-    printf("Token: fin de archivo\n");
+    // Fin de archivo
+    printf("Token: %s\n", token_names[t]);
     return 0;
 }
