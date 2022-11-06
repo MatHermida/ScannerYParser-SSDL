@@ -38,7 +38,8 @@ int main() {
             break;
         
         // Errores
-        default:
+        case CADENA_DESCONOCIDA:
+        case CONSTANTE_INVALIDA:
                 printf("Error lexico: %s: %s\t\t\n", token_names[t],yytext);
             break;
         }

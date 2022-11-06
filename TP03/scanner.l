@@ -19,6 +19,7 @@ exponentialpart [eE]{sign}?{integer}
 espacio [ \t\r\v\f]
 
 %%
+
 {espacio}                                               {return ESPACIO;}
 \n                                                      {return NUEVA_LINEA;}
 salir                                                   {return FIN_CALCULADORA;}
@@ -27,7 +28,10 @@ sin|cos|tan|asin|acos|atan|sqrt|log                     {return IDENTIFICADOR;}
 {compassignmentop}                                      {return SIGNO_PUNTUACION;}
 =|{sign}|[)*^/(]                                        {return SIGNO_PUNTUACION;}
 {letter}({letter}|{digit})*                             {return IDENTIFICADOR;}
-{integer}{letter}{integer}                               {return CONSTANTE_INVALIDA;}
+{integer}{letter}{integer}                              {return CONSTANTE_INVALIDA;}
 {integer}                                               {return ENTERO;}
+({integer}?{letter}*\.{letter}*{digit}{letter}*{exponentialpart}?)({integer}?{letter}*\.{digit}{letter}*{exponentialpart}?)+                {return CONSTANTE_INVALIDA;}
+({integer}{letter}*\.{letter}*{digit}?{letter}*{exponentialpart}?)({integer}{letter}*\.{digit}?{letter}*{exponentialpart}?)+                {return CONSTANTE_INVALIDA;}
 {integer}\.{digit}*{exponentialpart}?                   |
 {integer}?\.{digit}+{exponentialpart}?                  {return REAL;}
+
