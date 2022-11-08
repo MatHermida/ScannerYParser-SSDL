@@ -17,6 +17,8 @@ sign (\+|\-)
 integer    {nocero}{digit}*  
 exponentialpart [eE]{sign}?{integer}
 espacio [ \t\r\v\f]
+mispunct [).*+-=/^(]
+otros [^)*^/a-zA-Z0-9 \t\r\v\f\n(]
 
 %%
 
@@ -24,9 +26,9 @@ espacio [ \t\r\v\f]
 \n                                                      {return NUEVA_LINEA;}
 salir                                                   {return FIN_CALCULADORA;}
 var|cte                                                 {return PALABRA_RESERVADA;}
+{letter}({letter}|{digit})*{otros}({otros}|{letter}|{digit})*   {return IDENTIFICADOR_INVALIDO;}
 sin|cos|tan|asin|acos|atan|sqrt|log                     {return IDENTIFICADOR;}
-{compassignmentop}                                      {return SIGNO_PUNTUACION;}
-=|{sign}|[)*^/(]                                        {return SIGNO_PUNTUACION;}
+{compassignmentop}|=|{sign}|[)*^/(]                     {return SIGNO_PUNTUACION;}
 {letter}({letter}|{digit})*                             {return IDENTIFICADOR;}
 {integer}{letter}{integer}                              {return CONSTANTE_INVALIDA;}
 {integer}                                               {return ENTERO;}
@@ -34,4 +36,4 @@ sin|cos|tan|asin|acos|atan|sqrt|log                     {return IDENTIFICADOR;}
 ({integer}{letter}*\.{letter}*{digit}?{letter}*{exponentialpart}?)({integer}{letter}*\.{digit}?{letter}*{exponentialpart}?)+                {return CONSTANTE_INVALIDA;}
 {integer}\.{digit}*{exponentialpart}?                   |
 {integer}?\.{digit}+{exponentialpart}?                  {return REAL;}
-
+{otros}*                                                {return CADENA_DESCONOCIDA;}
