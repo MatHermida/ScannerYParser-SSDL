@@ -18,6 +18,7 @@ integer    {nocero}{digit}*
 exponentialpart [eE]{sign}?{integer}
 espacio [ \t\r\v\f]
 mispunct [).*+-=/^(]
+operadores [/+*^-]
 otros [^)*^/a-zA-Z0-9 \t\r\v\f\n(]
 
 %%
@@ -28,7 +29,9 @@ salir                                                   {return FIN_CALCULADORA;
 var|cte                                                 {return PALABRA_RESERVADA;}
 {letter}({letter}|{digit})*{otros}({otros}|{letter}|{digit})*   {return IDENTIFICADOR_INVALIDO;}
 sin|cos|tan|asin|acos|atan|sqrt|log                     {return IDENTIFICADOR;}
-{compassignmentop}|=|{sign}|[)*^/(]                     {return SIGNO_PUNTUACION;}
+{operadores}                                            {return OPERADOR;}
+{compassignmentop}|=                                    {return SIGNO_ASIGNACION;}
+[)*^/(]                     {return SIGNO_PUNTUACION;}
 {letter}({letter}|{digit})*                             {return IDENTIFICADOR;}
 {integer}{letter}{integer}                              {return CONSTANTE_INVALIDA;}
 {integer}                                               {return ENTERO;}

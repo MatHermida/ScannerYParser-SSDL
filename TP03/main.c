@@ -4,7 +4,7 @@
 
 enum token t;
 int yylex();
-char *token_names[] = {"Fin de archivo", "Identificador", "Entero", "Real", "Palabra reservada", "NL", "Espacio", "Signo_puntuacion", "Cadena desconocida", "Fin calculadora", "Constante invalida", "Identificador invalido"};
+char *token_names[] = {"Fin de archivo", "Identificador", "Entero", "Real", "Palabra reservada", "NL", "Espacio", "Signo_puntuacion", "Cadena desconocida", "Fin calculadora", "Constante invalida", "Identificador invalido", "Signo asignacion", "Operador"};
 // enum token {FDT, IDENTIFICADOR, ENTERO, REAL, PALABRA_RESERVADA, NUEVA_LINEA, ESPACIO, SIGNO_PUNTUACION, CADENA_DESCONOCIDA, FIN_CALCULADORA};
 char *yytext;
 int yyleng;
@@ -34,6 +34,8 @@ int main() {
         
         case PALABRA_RESERVADA:
         case SIGNO_PUNTUACION:
+        case SIGNO_ASIGNACION:
+        case OPERADOR:
         case FIN_CALCULADORA:
             if (yyleng == 1) {
                 printf("Token: '%c'\n", yytext[0]);
