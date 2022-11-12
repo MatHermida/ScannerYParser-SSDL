@@ -5,7 +5,7 @@
 enum token t;
 int yylex();
 char *token_names[] = {"Fin de archivo", "Identificador", "Entero", "Real", "Palabra reservada", "NL", "Espacio", "Signo_puntuacion", "Cadena desconocida", "Fin calculadora", "Constante invalida", "Identificador invalido", "Signo asignacion", "Operador"};
-// enum token {FDT, IDENTIFICADOR, ENTERO, REAL, PALABRA_RESERVADA, NUEVA_LINEA, ESPACIO, SIGNO_PUNTUACION, CADENA_DESCONOCIDA, FIN_CALCULADORA};
+// enum token {FDT, IDENTIFICADOR, ENTERO, REAL, PALABRA_RESERVADA, NUEVA_LINEA, ESPACIO, SIGNO_PUNTUACION, CADENA_DESCONOCIDA, FIN_CALCULADORA, CONSTANTE_INVALIDA, IDENTIFICADOR_INVALIDO, SIGNO_ASIGNACION, OPERADOR};
 char *yytext;
 int yyleng;
 
