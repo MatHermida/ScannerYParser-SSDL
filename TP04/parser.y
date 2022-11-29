@@ -38,10 +38,11 @@
 
 %%
 
-calculadora : listaDeSentencias FIN_CALCULADORA {return 0;}
+calculadora : listaDeSentencias FIN_CALCULADORA {return 0;} 
     | FIN_CALCULADORA {return 0;}
     ;
-listaDeSentencias : listaDeSentencias Sentencia
+listaDeSentencias : listaDeSentencias '\n' Sentencia
+    | error '\n' listaDeSentencias 
     | Sentencia
     ;
 Sentencia : Declaracion
@@ -49,8 +50,8 @@ Sentencia : Declaracion
     | Expresion
     ;
 Declaracion : "var" IDENTIFICADOR {printf("Define '%s' como variable\n", $2);}
-    | "var" IDENTIFICADOR '=' Expresion
-    | "cte" IDENTIFICADOR '=' Expresion
+    | "var" IDENTIFICADOR '=' Expresion {printf("Define '%s' como variable con valor inicial\n", $2);}
+    | "cte" IDENTIFICADOR '=' Expresion {printf("Define '%s' como constante\n", $2);}
     ;
 Expresion : IDENTIFICADOR ASIGNACION_COMPUESTA Expresion
     | IDENTIFICADOR '=' Expresion

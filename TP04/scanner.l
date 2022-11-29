@@ -23,7 +23,7 @@ otros [^)*^/a-zA-Z0-9 \t\r\v\f\n(]
 
 %%
 
-\n                                                      {return '\n';}
+\n                                                      {yylval.charac = yytext[0]; return yytext[0];}
 [[:space:]]+                                            ;
 salir                                                   {return FIN_CALCULADORA;}
 sin|cos|tan|asin|acos|atan|sqrt|log                     {yylval.string = strdup(yytext); return FUNCION;}
@@ -32,8 +32,8 @@ cte                                                     {yylval.string = strdup(
 {letter}({letter}|{digit})*{otros}({otros}|{letter}|{digit})*   {snprintf(errorBuf, sizeof(errorBuf),"Error léxico, identificador invalido, valor: %s", yytext);yyerror(errorBuf);}
 {operadores}                                            {yylval.charac = yytext[0]; return yytext[0];}
 =                                                       {yylval.charac = yytext[0]; return yytext[0];}
-{compassignmentop}                                    {yylval.string = strdup(yytext); return ASIGNACION_COMPUESTA;}
-[)(]                                                 {yylval.charac = yytext[0]; return yytext[0];}
+{compassignmentop}                                      {yylval.string = strdup(yytext); return ASIGNACION_COMPUESTA;}
+[)(]                                                    {yylval.charac = yytext[0]; return yytext[0];}
 {letter}({letter}|{digit})*                             {yylval.string = strdup(yytext); return IDENTIFICADOR;}
 {integer}{letter}{integer}                              {snprintf(errorBuf, sizeof(errorBuf),"Error léxico, constante inválida, valor: %s", yytext);yyerror(errorBuf);}
 {integer}                                               {yylval.num = atof(yytext); return NUM;}

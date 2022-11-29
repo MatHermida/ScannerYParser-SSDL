@@ -1031,7 +1031,7 @@ case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
 #line 26 "scanner.l"
-{return '\n';}
+{yylval.charac = yytext[0]; return yytext[0];}
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
