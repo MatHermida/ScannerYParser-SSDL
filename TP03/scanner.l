@@ -16,14 +16,13 @@ compassignmentop \+=|-=|\*=|[/]=
 sign \+|\-
 integer    {nocero}{digit}*  
 exponentialpart [eE]{sign}?{integer}
-espacio [ \t\r\v\f]
 operadores [/+*^-]
 otros [^)*^/a-zA-Z0-9 \t\r\v\f\n(]
 
 %%
 
-{espacio}                                               {return ESPACIO;}
 \n                                                      {return NUEVA_LINEA;}
+[[:space:]]                                             {return ESPACIO;}
 salir                                                   {return FIN_CALCULADORA;}
 var|cte                                                 {return PALABRA_RESERVADA;}
 {letter}({letter}|{digit})*{otros}({otros}|{letter}|{digit})*   {return IDENTIFICADOR_INVALIDO;}
