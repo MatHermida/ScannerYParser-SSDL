@@ -50,16 +50,17 @@ extern int yydebug;
   enum yytokentype
   {
     IDENTIFICADOR = 258,
-    PALABRA_RESERVADA_VARIABLE = 259,
-    PALABRA_RESERVADA_CONSTANTE = 260,
-    NUM = 261,
-    CADENA_DESCONOCIDA = 262,
-    CONSTANTE_INVALIDA = 263,
-    IDENTIFICADOR_INVALIDO = 264,
-    ASIGNACION_COMPUESTA = 265,
-    NEG = 266,
-    FUNCION = 267,
-    FIN_CALCULADORA = 268
+    NUM = 259,
+    CADENA_DESCONOCIDA = 260,
+    CONSTANTE_INVALIDA = 261,
+    IDENTIFICADOR_INVALIDO = 262,
+    ASIGNACION_COMPUESTA = 263,
+    NEG = 264,
+    FUNCION = 265,
+    FIN_CALCULADORA = 266,
+    VAR = 267,
+    CTE = 268,
+    FDL = 269
   };
 #endif
 
@@ -73,7 +74,7 @@ union YYSTYPE
     char* string;
     char charac;
 
-#line 77 "parser.h"
+#line 78 "parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -91,6 +92,6 @@ int yyparse (void);
     void yyerror(const char *);
     extern int yylexerrs;
 
-#line 95 "parser.h"
+#line 96 "parser.h"
 
 #endif /* !YY_YY_PARSER_H_INCLUDED  */

@@ -3,14 +3,13 @@
 
 int lexerrs = 0;
 int main() {
-
-    switch (yyparse())
-    {
-    case 0:
-        /* code */
-        break;
-    }
-
-    return 0;
-
+	switch( yyparse() ){
+	case 0:
+		return 0;
+	case 1:
+		return 1;
+	case 2:
+		puts("Memoria insuficiente"); return 2;
+	}
+	return 0;
 }
