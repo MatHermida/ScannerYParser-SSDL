@@ -52,29 +52,29 @@ listaDeSentencias : listaDeSentencias Sentencia
 | Sentencia
 ; 
 
-Sentencia : Declaracion '\n'
-    | Expresion '\n' {printf("%f\n", $1);}
-    | error '\n'
+Sentencia : Declaracion '\n' {printf("\n");};
+    | Expresion '\n' {printf("Expresion\n\n");}
+    | error '\n' {printf("\n");}
     ;
 Declaracion : VAR IDENTIFICADOR {printf("Declarado '%s' como variable.\n", $2);}
     | VAR IDENTIFICADOR '=' Expresion {printf("Declarado '%s' como variable con valor inicial.\n", $2);}
     | CTE IDENTIFICADOR '=' Expresion {printf("Declarado '%s' como constante.\n", $2);}
     ;
-Expresion : IDENTIFICADOR ASIGNACION_COMPUESTA Expresion {$$ = $3;}
-    | IDENTIFICADOR '=' Expresion {$$ = $3;}
-    | IDENTIFICADOR           
-    | NUM {$$ = $1;}
-    | Expresion '+' Expresion {$$ = $1+$3;}
-    | Expresion '-' Expresion {$$ = $1-$3;}
-    | Expresion '*' Expresion {$$ = $1*$3;}
-    | Expresion '/' Expresion {$$ = $1/$3;}
-    | Expresion '^' Expresion
-    | '-'Expresion %prec NEG {$$ = -$2;}
+Expresion : IDENTIFICADOR ASIGNACION_COMPUESTA Expresion {printf("Asignacion compuesta '%s'\n", $2);}
+    | IDENTIFICADOR '=' Expresion {printf("Asignacion\n");}
+    | IDENTIFICADOR {printf("Identificador\n");}    
+    | NUM {printf("Numero\n");}
+    | Expresion '+' Expresion {printf("Suma\n");}
+    | Expresion '-' Expresion {printf("Resta\n");}
+    | Expresion '*' Expresion {printf("Multiplicacion\n");}
+    | Expresion '/' Expresion {printf("Division\n");}
+    | Expresion '^' Expresion {printf("Potencia\n");}
+    | '-'Expresion %prec NEG {printf("Cambio de signo\n");}
     | ExpresionPrimaria
     ;
 
-ExpresionPrimaria : '('Expresion')'         
-    | FUNCION'('Expresion')'  
+ExpresionPrimaria : '('Expresion')' {printf("Parentesis\n");}        
+    | FUNCION'('Expresion')'  {printf("Funcion\n");}
     ;
 %%
 

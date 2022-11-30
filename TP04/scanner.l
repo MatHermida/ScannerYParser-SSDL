@@ -24,7 +24,7 @@ otros [^)*^/a-zA-Z0-9 \t\r\v\f\n(]
 %%
 
 ;                                                      {yylval.charac = yytext[0]; return yytext[0];}
-\n                                                      {yylval.charac = yytext[0]; FDL;}
+\n                                                      {yylval.charac = yytext[0]; return yytext[0];}
 [[:space:]]+                                            ;
 salir\n                                                   {return FIN_CALCULADORA;}
 sin|cos|tan|asin|acos|atan|sqrt|log                     {yylval.string = strdup(yytext); return FUNCION;}
