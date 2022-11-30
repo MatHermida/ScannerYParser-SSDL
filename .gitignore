@@ -4,4 +4,8 @@ TP03/scanner.h
 desktop.ini
 TP02/desktop.ini
 TP03/desktop.ini
-TP04/desktop.ini
+TP04/*
+!TP04/scanner.l
+!TP04/parser.y
+!TP04/main.c
+!TP04/Makefile
