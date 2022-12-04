@@ -32,15 +32,14 @@
 %left '*' '/'
 %precedence NEG
 %right '^'
-%right '(' ')'
-%token FUNCION
+%precedence PARENTHESIS 
+%precedence FUNCTION
 %token FIN_CALCULADORA 
 %token VAR
 %token CTE
 %token FDL
 
 %type <num> Expresion
-%type <num> ExpresionPrimaria
 
 %%
 
@@ -52,9 +51,10 @@ listaDeSentencias : listaDeSentencias Sentencia
 | Sentencia
 ; 
 
-Sentencia : Declaracion '\n' {printf("\n");};
-    | Expresion '\n' {printf("Expresion\n\n");}
-    | error '\n' {printf("\n");}
+Sentencia : Declaracion FDL {printf("\n");};
+    | Expresion FDL {printf("Expresion\n\n");}
+    | error FDL {printf("\n");}
+    | FDL
     ;
 Declaracion : VAR IDENTIFICADOR {printf("Declarado '%s' como variable.\n", $2);}
     | VAR IDENTIFICADOR '=' Expresion {printf("Declarado '%s' como variable con valor inicial.\n", $2);}
@@ -70,11 +70,8 @@ Expresion : IDENTIFICADOR ASIGNACION_COMPUESTA Expresion {printf("Asignacion com
     | Expresion '/' Expresion {printf("Division\n");}
     | Expresion '^' Expresion {printf("Potencia\n");}
     | '-'Expresion %prec NEG {printf("Cambio de signo\n");}
-    | ExpresionPrimaria
-    ;
-
-ExpresionPrimaria : '('Expresion')' {printf("Parentesis\n");}        
-    | FUNCION'('Expresion')'  {printf("Funcion\n");}
+    | '('Expresion')' %prec PARENTHESIS {printf("Parentesis\n");}        
+    | IDENTIFICADOR'('Expresion')' %prec FUNCTION {printf("Funcion\n");}
     ;
 %%
 
