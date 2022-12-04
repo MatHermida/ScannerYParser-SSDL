@@ -24,7 +24,7 @@ espacios [[:space:]]{-}[\n]
 
 %%
 
-;                                                      {yylval.charac = yytext[0]; return yytext[0];}
+;                                                       {yylval.charac = yytext[0]; return yytext[0];}
 \n                                                      {yylval.charac = yytext[0]; return FDL;}
 espacios+                                               ;
 salir                                                   {return FIN_CALCULADORA;}

@@ -48,8 +48,8 @@ calculadora: listaDeSentencias FIN_CALCULADORA {return 0;}
     ;
 
 listaDeSentencias : listaDeSentencias Sentencia 
-| Sentencia
-; 
+    | Sentencia 
+    ; 
 
 Sentencia : Declaracion FDL {printf("\n");};
     | Expresion FDL {printf("Expresion\n\n");}
