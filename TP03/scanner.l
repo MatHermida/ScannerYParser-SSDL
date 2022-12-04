@@ -8,6 +8,7 @@
 
 %option outfile="scanner.c"
 %option header-file="scanner.h"
+%option noinput nounput
 
 letter [a-zA-Z]
 digit [0-9]
@@ -18,11 +19,12 @@ integer    {nocero}{digit}*
 exponentialpart [eE]{sign}?{integer}
 operadores [/+*^-]
 otros [^)*^/a-zA-Z0-9 \t\r\v\f\n(]
+espacios [[:space:]]{-}[\n]
 
 %%
 
 \n                                                      {return NUEVA_LINEA;}
-[[:space:]]                                             {return ESPACIO;}
+{espacios}+                                               {return ESPACIO;}
 salir                                                   {return FIN_CALCULADORA;}
 var|cte                                                 {return PALABRA_RESERVADA;}
 {letter}({letter}|{digit})*{otros}({otros}|{letter}|{digit})*   {return IDENTIFICADOR_INVALIDO;}
@@ -31,9 +33,9 @@ var|cte                                                 {return PALABRA_RESERVAD
 [)*^/(]                                                 {return SIGNO_PUNTUACION;}
 {letter}({letter}|{digit})*                             {return IDENTIFICADOR;}
 {integer}{letter}{integer}                              {return CONSTANTE_INVALIDA;}
-{integer}                                               {return ENTERO;}
+{integer}                                               {return NUM;}
 ({integer}?{letter}*\.{letter}*{digit}{letter}*{exponentialpart}?)({integer}?{letter}*\.{digit}{letter}*{exponentialpart}?)+                {return CONSTANTE_INVALIDA;}
 ({integer}{letter}*\.{letter}*{digit}?{letter}*{exponentialpart}?)({integer}{letter}*\.{digit}?{letter}*{exponentialpart}?)+                {return CONSTANTE_INVALIDA;}
 {integer}\.{digit}*{exponentialpart}?                   |
-{integer}?\.{digit}+{exponentialpart}?                  {return REAL;}
+{integer}?\.{digit}+{exponentialpart}?                  {return NUM;}
 {otros}*                                                {return CADENA_DESCONOCIDA;}
