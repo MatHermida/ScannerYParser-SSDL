@@ -24,9 +24,8 @@ espacios [[:space:]]{-}[\n]
 
 %%
 
-;                                                       {yylval.charac = yytext[0]; return yytext[0];}
 \n                                                      {yylval.charac = yytext[0]; return FDL;}
-espacios+                                               ;
+{espacios}+                                               ;
 salir                                                   {return FIN_CALCULADORA;}
 var                                                     {yylval.string = strdup(yytext); return VAR;}
 cte                                                     {yylval.string = strdup(yytext); return CTE;}
