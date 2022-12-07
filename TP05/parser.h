@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.8.2.  */
+/* A Bison parser, made by GNU Bison 3.5.1.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -31,9 +31,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
-   especially those whose name start with YY_ or yy_.  They are
-   private implementation details that can be changed or removed.  */
+/* Undocumented macros, especially those whose name start with YY_,
+   are private implementation details.  Do not rely on them.  */
 
 #ifndef YY_YY_PARSER_H_INCLUDED
 # define YY_YY_PARSER_H_INCLUDED
@@ -45,43 +44,38 @@
 extern int yydebug;
 #endif
 
-/* Token kinds.  */
+/* Token type.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    YYEMPTY = -2,
-    YYEOF = 0,                     /* "end of file"  */
-    YYerror = 256,                 /* error  */
-    YYUNDEF = 257,                 /* "invalid token"  */
-    IDENTIFICADOR = 258,           /* IDENTIFICADOR  */
-    NUM = 259,                     /* NUM  */
-    CADENA_DESCONOCIDA = 260,      /* CADENA_DESCONOCIDA  */
-    CONSTANTE_INVALIDA = 261,      /* CONSTANTE_INVALIDA  */
-    IDENTIFICADOR_INVALIDO = 262,  /* IDENTIFICADOR_INVALIDO  */
-    ASIGNACION_COMPUESTA = 263,    /* ASIGNACION_COMPUESTA  */
-    NEG = 264,                     /* NEG  */
-    PARENTHESIS = 265,             /* PARENTHESIS  */
-    FUNCTION = 266,                /* FUNCTION  */
-    FIN_CALCULADORA = 267,         /* FIN_CALCULADORA  */
-    VAR = 268,                     /* VAR  */
-    CTE = 269,                     /* CTE  */
-    FDL = 270                      /* FDL  */
+    IDENTIFICADOR = 258,
+    NUM = 259,
+    CADENA_DESCONOCIDA = 260,
+    CONSTANTE_INVALIDA = 261,
+    IDENTIFICADOR_INVALIDO = 262,
+    ASIGNACION_COMPUESTA = 263,
+    NEG = 264,
+    PARENTHESIS = 265,
+    FUNCTION = 266,
+    FIN_CALCULADORA = 267,
+    VAR = 268,
+    CTE = 269,
+    FDL = 270
   };
-  typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 16 "parser.y"
+#line 19 "parser.y"
 
     double num;
     char* string;
     char charac;
 
-#line 85 "parser.h"
+#line 79 "parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -92,15 +86,13 @@ typedef union YYSTYPE YYSTYPE;
 
 extern YYSTYPE yylval;
 
-
 int yyparse (void);
-
 /* "%code provides" blocks.  */
-#line 7 "parser.y"
+#line 10 "parser.y"
 
     void yyerror(const char *);
     extern int yylexerrs;
 
-#line 105 "parser.h"
+#line 97 "parser.h"
 
 #endif /* !YY_YY_PARSER_H_INCLUDED  */

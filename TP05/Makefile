@@ -1,8 +1,11 @@
-main: main.o scanner.o parser.o
-	gcc main.o scanner.o parser.o -o main -lfl
+main: calc.o main.o scanner.o parser.o
+	gcc calc.o main.o scanner.o parser.o -o main -lfl -lm
 
-main.o: main.c scanner.c parser.c
+main.o: main.c scanner.c parser.c calc.c
 	gcc -c main.c
+
+calc.o: calc.c
+	gcc -c calc.c
 
 scanner.o: scanner.c parser.h
 	gcc -c scanner.c

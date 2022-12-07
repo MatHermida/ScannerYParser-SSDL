@@ -1,12 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "parser.h"
 #include "calc.h"
 
-int lexerrs = 0;
 int main() {
-
-	struct table_node* symbol_table = (struct table_node*) malloc(sizeof(struct table_node));
-
+	symbol_table = initial_table();
 	switch( yyparse() ){
 	case 0:
 		return 0;

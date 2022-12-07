@@ -1,7 +1,10 @@
     %code top{
 #include <stdio.h>
 #include <strings.h>
+#include <math.h>
 #include "scanner.h"
+#include "calc.h"
+
 }
 
 %code provides {
@@ -52,7 +55,7 @@ listaDeSentencias : listaDeSentencias Sentencia
     ; 
 
 Sentencia : Declaracion FDL {printf("\n");};
-    | Expresion FDL {printf("Expresion\n\n");}
+    | Expresion FDL {printf("%f\n\n", $1);}
     | error FDL {printf("\n");}
     | FDL
     ;
@@ -62,14 +65,14 @@ Declaracion : VAR IDENTIFICADOR {printf("Declarado '%s' como variable.\n", $2);}
     ;
 Expresion : IDENTIFICADOR ASIGNACION_COMPUESTA Expresion {printf("Asignacion compuesta '%s'\n", $2);}
     | IDENTIFICADOR '=' Expresion {printf("Asignacion\n");}
-    | IDENTIFICADOR {printf("Identificador\n");}    
-    | NUM {printf("Numero\n");}
-    | Expresion '+' Expresion {printf("Suma\n");}
-    | Expresion '-' Expresion {printf("Resta\n");}
-    | Expresion '*' Expresion {printf("Multiplicacion\n");}
-    | Expresion '/' Expresion {printf("Division\n");}
-    | Expresion '^' Expresion {printf("Potencia\n");}
-    | '-'Expresion %prec NEG {printf("Cambio de signo\n");}
+    | IDENTIFICADOR {$$ = get_numeric_value($1, symbol_table);}    
+    | NUM {$$ = $1;}
+    | Expresion '+' Expresion {$$ = $1 + $3;}
+    | Expresion '-' Expresion {$$ = $1 - $3;}
+    | Expresion '*' Expresion {$$ = $1 * $3;}
+    | Expresion '/' Expresion {$$ = $1 / $3;}
+    | Expresion '^' Expresion {$$ = pow($1, $3);}
+    | '-'Expresion %prec NEG {$$ = -$2;}
     | '('Expresion')' %prec PARENTHESIS {printf("Parentesis\n");}        
     | IDENTIFICADOR'('Expresion')' %prec FUNCTION {printf("Funcion\n");}
     ;
