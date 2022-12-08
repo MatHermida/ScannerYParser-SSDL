@@ -6,6 +6,7 @@
 
 int main() {
 	symbol_table = initial_table();
+	
 	switch( yyparse() ){
 	case 0:
 		return 0;

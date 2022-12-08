@@ -24,7 +24,6 @@ void print_table(table_node * table) {
 int main() {
     
     table_node * symbol_table = initial_table();
-
     
     // struct table_entry buffer[] = {
     //     [0].id = "sin",
@@ -56,7 +55,10 @@ int main() {
     //     add_table_entry(buffer[i], &symbol_table);
     // }
 
-    print_table(symbol_table);
-    printf("%f\n", get_numeric_value("e", symbol_table));
-    printf("%f\n", get_numeric_value("pi", symbol_table));
+    double (*seno)(double) = (get_function("sin", symbol_table));
+    printf("%f\n", (*seno)(M_PI/2));
+    printf("%f\n", (*seno)(M_PI));
+    //print_table(symbol_table);
+    // printf("%f\n", get_numeric_value("e", symbol_table));
+    // printf("%f\n", get_numeric_value("pi", symbol_table));
 }

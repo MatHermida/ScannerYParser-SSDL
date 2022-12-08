@@ -59,8 +59,8 @@ Sentencia : Declaracion FDL {printf("\n");};
     | error FDL {printf("\n");}
     | FDL
     ;
-Declaracion : VAR IDENTIFICADOR {printf("Declarado '%s' como variable.\n", $2);}
-    | VAR IDENTIFICADOR '=' Expresion {printf("Declarado '%s' como variable con valor inicial.\n", $2);}
+Declaracion : VAR IDENTIFICADOR {YYERROR;}
+    | VAR IDENTIFICADOR '=' Expresion {declare_numeric_symbol($2, $4, VARIABLE, &symbol_table);}
     | CTE IDENTIFICADOR '=' Expresion {printf("Declarado '%s' como constante.\n", $2);}
     ;
 Expresion : IDENTIFICADOR ASIGNACION_COMPUESTA Expresion {printf("Asignacion compuesta '%s'\n", $2);}
@@ -73,8 +73,8 @@ Expresion : IDENTIFICADOR ASIGNACION_COMPUESTA Expresion {printf("Asignacion com
     | Expresion '/' Expresion {$$ = $1 / $3;}
     | Expresion '^' Expresion {$$ = pow($1, $3);}
     | '-'Expresion %prec NEG {$$ = -$2;}
-    | '('Expresion')' %prec PARENTHESIS {printf("Parentesis\n");}        
-    | IDENTIFICADOR'('Expresion')' %prec FUNCTION {printf("Funcion\n");}
+    | '('Expresion')' %prec PARENTHESIS {$$ = $2;}        
+    | IDENTIFICADOR'('Expresion')' %prec FUNCTION {$$ = (*get_function)($1, symbol_table)($3);}
     ;
 %%
 

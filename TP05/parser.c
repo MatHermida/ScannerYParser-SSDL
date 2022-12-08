@@ -1389,13 +1389,13 @@ yyreduce:
 
   case 10:
 #line 62 "parser.y"
-                                {printf("Declarado '%s' como variable.\n", (yyvsp[0].string));}
+                                {YYERROR;}
 #line 1394 "parser.c"
     break;
 
   case 11:
 #line 63 "parser.y"
-                                      {printf("Declarado '%s' como variable con valor inicial.\n", (yyvsp[-2].string));}
+                                      {declare_numeric_symbol((yyvsp[-2].string), (yyvsp[0].num), VARIABLE, &symbol_table);}
 #line 1400 "parser.c"
     break;
 
@@ -1467,13 +1467,13 @@ yyreduce:
 
   case 23:
 #line 76 "parser.y"
-                                        {printf("Parentesis\n");}
+                                        {(yyval.num) = (yyvsp[-1].num);}
 #line 1472 "parser.c"
     break;
 
   case 24:
 #line 77 "parser.y"
-                                                  {printf("Funcion\n");}
+                                                  {(yyval.num) = (*get_function)((yyvsp[-3].string), symbol_table)((yyvsp[-1].num));}
 #line 1478 "parser.c"
     break;
 

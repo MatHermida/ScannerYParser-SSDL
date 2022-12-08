@@ -36,6 +36,7 @@ cte                                                     {yylval.string = strdup(
 [)(]                                                    {yylval.charac = yytext[0]; return yytext[0];}
 {letter}({letter}|{digit})*                             {yylval.string = strdup(yytext); return IDENTIFICADOR;}
 {integer}{letter}{integer}                              {snprintf(errorBuf, sizeof(errorBuf),"Error léxico, constante inválida, valor: %s\n", yytext);yyerror(errorBuf);}
+0+                                                      {yylval.num = atof(yytext); return NUM;}
 {integer}                                               {yylval.num = atof(yytext); return NUM;}
 ({integer}?{letter}*\.{letter}*{digit}{letter}*{exponentialpart}?)({integer}?{letter}*\.{digit}{letter}*{exponentialpart}?)+                |
 ({integer}{letter}*\.{letter}*{digit}?{letter}*{exponentialpart}?)({integer}{letter}*\.{digit}?{letter}*{exponentialpart}?)+                {snprintf(errorBuf, sizeof(errorBuf),"Error léxico, constante inválida, valor: %s\n", yytext);yyerror(errorBuf);}
