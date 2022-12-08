@@ -63,14 +63,14 @@
 #define YYPULL 1
 
 /* "%code top" blocks.  */
-#line 1 "parser.y"
+#line 5 "parser.y"
 
 #include <stdio.h>
 #include <strings.h>
 #include <math.h>
+#include <string.h>
 #include "scanner.h"
 #include "calc.h"
-
 
 #line 76 "parser.c"
 
@@ -117,6 +117,12 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 1 "parser.y"
+
+    #include "parser.h"
+
+#line 126 "parser.c"
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -143,13 +149,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 19 "parser.y"
+#line 24 "parser.y"
 
     double num;
     char* string;
     char charac;
 
-#line 153 "parser.c"
+#line 159 "parser.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -162,12 +168,13 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 /* "%code provides" blocks.  */
-#line 10 "parser.y"
+#line 14 "parser.y"
 
     void yyerror(const char *);
     extern int yylexerrs;
+    char errorBuf[100];
 
-#line 171 "parser.c"
+#line 178 "parser.c"
 
 #endif /* !YY_YY_PARSER_H_INCLUDED  */
 
@@ -531,11 +538,11 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_int8 yyrline[] =
+static const yytype_uint8 yyrline[] =
 {
-       0,    49,    49,    50,    53,    54,    57,    58,    59,    60,
-      62,    63,    64,    66,    67,    68,    69,    70,    71,    72,
-      73,    74,    75,    76,    77
+       0,    54,    54,    55,    58,    59,    62,    63,    64,    65,
+      67,    75,    83,    92,   106,   120,   135,   136,   137,   138,
+     139,   140,   141,   142,   143
 };
 #endif
 
@@ -1358,127 +1365,200 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 49 "parser.y"
+#line 54 "parser.y"
                                                {return 0;}
-#line 1364 "parser.c"
+#line 1371 "parser.c"
     break;
 
   case 3:
-#line 50 "parser.y"
+#line 55 "parser.y"
                       {return 0;}
-#line 1370 "parser.c"
+#line 1377 "parser.c"
     break;
 
   case 6:
-#line 57 "parser.y"
+#line 62 "parser.y"
                             {printf("\n");}
-#line 1376 "parser.c"
+#line 1383 "parser.c"
     break;
 
   case 7:
-#line 58 "parser.y"
+#line 63 "parser.y"
                     {printf("%f\n\n", (yyvsp[-1].num));}
-#line 1382 "parser.c"
+#line 1389 "parser.c"
     break;
 
   case 8:
-#line 59 "parser.y"
+#line 64 "parser.y"
                 {printf("\n");}
-#line 1388 "parser.c"
+#line 1395 "parser.c"
     break;
 
   case 10:
-#line 62 "parser.y"
-                                {YYERROR;}
-#line 1394 "parser.c"
+#line 67 "parser.y"
+                                                   {
+                                                            if (!id_declared((yyvsp[0].string), symbol_table)) {
+                                                                declare_numeric_symbol((yyvsp[0].string), 0, VARIABLE, &symbol_table);
+                                                            } else {
+                                                                already_declared_error((yyvsp[0].string));
+                                                            }
+                                                            
+                                                         }
+#line 1408 "parser.c"
     break;
 
   case 11:
-#line 63 "parser.y"
-                                      {declare_numeric_symbol((yyvsp[-2].string), (yyvsp[0].num), VARIABLE, &symbol_table);}
-#line 1400 "parser.c"
+#line 75 "parser.y"
+                                                         {
+                                                            if (!id_declared((yyvsp[-2].string), symbol_table)) {
+                                                                declare_numeric_symbol((yyvsp[-2].string), (yyvsp[0].num), VARIABLE, &symbol_table);
+                                                            } else {
+                                                                already_declared_error((yyvsp[-2].string));
+                                                            }
+                                                            
+                                                         }
+#line 1421 "parser.c"
     break;
 
   case 12:
-#line 64 "parser.y"
-                                      {printf("Declarado '%s' como constante.\n", (yyvsp[-2].string));}
-#line 1406 "parser.c"
+#line 83 "parser.y"
+                                                         {
+                                                            if (!id_declared((yyvsp[-2].string), symbol_table)) {
+                                                                declare_numeric_symbol((yyvsp[-2].string), (yyvsp[0].num), CONSTANTE, &symbol_table);
+                                                            } else {
+                                                                already_declared_error((yyvsp[-2].string));
+                                                            }
+                                                            
+                                                         }
+#line 1434 "parser.c"
     break;
 
   case 13:
-#line 66 "parser.y"
-                                                         {printf("Asignacion compuesta '%s'\n", (yyvsp[-1].string));}
-#line 1412 "parser.c"
+#line 92 "parser.y"
+                                                         {
+                                                            if (id_declared((yyvsp[-2].string), symbol_table)) {
+                                                                if(get_entry_type((yyvsp[-2].string), symbol_table) == VARIABLE) {
+                                                                    compose_reassign_entry_value_double((yyvsp[-2].string), (yyvsp[-1].string), (yyvsp[0].num), &symbol_table);
+                                                                    (yyval.num) = get_numeric_value((yyvsp[-2].string), symbol_table);
+                                                                } else {
+                                                                    wrong_type_error((yyvsp[-2].string), symbol_type_names[VARIABLE]);
+                                                                    YYERROR;
+                                                                }
+                                                            } else {
+                                                                undeclared_id_error((yyvsp[-2].string));
+                                                                YYERROR;
+                                                            }
+                                                         }
+#line 1453 "parser.c"
     break;
 
   case 14:
-#line 67 "parser.y"
-                                  {printf("Asignacion\n");}
-#line 1418 "parser.c"
-    break;
-
-  case 15:
-#line 68 "parser.y"
-                    {(yyval.num) = get_numeric_value((yyvsp[0].string), symbol_table);}
-#line 1424 "parser.c"
-    break;
-
-  case 16:
-#line 69 "parser.y"
-          {(yyval.num) = (yyvsp[0].num);}
-#line 1430 "parser.c"
-    break;
-
-  case 17:
-#line 70 "parser.y"
-                              {(yyval.num) = (yyvsp[-2].num) + (yyvsp[0].num);}
-#line 1436 "parser.c"
-    break;
-
-  case 18:
-#line 71 "parser.y"
-                              {(yyval.num) = (yyvsp[-2].num) - (yyvsp[0].num);}
-#line 1442 "parser.c"
-    break;
-
-  case 19:
-#line 72 "parser.y"
-                              {(yyval.num) = (yyvsp[-2].num) * (yyvsp[0].num);}
-#line 1448 "parser.c"
-    break;
-
-  case 20:
-#line 73 "parser.y"
-                              {(yyval.num) = (yyvsp[-2].num) / (yyvsp[0].num);}
-#line 1454 "parser.c"
-    break;
-
-  case 21:
-#line 74 "parser.y"
-                              {(yyval.num) = pow((yyvsp[-2].num), (yyvsp[0].num));}
-#line 1460 "parser.c"
-    break;
-
-  case 22:
-#line 75 "parser.y"
-                             {(yyval.num) = -(yyvsp[0].num);}
-#line 1466 "parser.c"
-    break;
-
-  case 23:
-#line 76 "parser.y"
-                                        {(yyval.num) = (yyvsp[-1].num);}
+#line 106 "parser.y"
+                                                         {
+                                                            if (id_declared((yyvsp[-2].string), symbol_table)) {
+                                                                if(get_entry_type((yyvsp[-2].string), symbol_table) == VARIABLE) {
+                                                                    reassign_entry_value_double((yyvsp[-2].string), (yyvsp[0].num), &symbol_table);
+                                                                    (yyval.num) = (yyvsp[0].num);
+                                                                } else {
+                                                                    wrong_type_error((yyvsp[-2].string), symbol_type_names[VARIABLE]);
+                                                                    YYERROR;
+                                                                }
+                                                            } else {
+                                                                undeclared_id_error((yyvsp[-2].string));
+                                                                YYERROR;
+                                                            }
+                                                         }
 #line 1472 "parser.c"
     break;
 
+  case 15:
+#line 120 "parser.y"
+                                                         {
+                                                            if (id_declared((yyvsp[0].string), symbol_table)) {
+                                                                if (get_entry_type((yyvsp[0].string), symbol_table) != FUNCION) {
+                                                                    (yyval.num) = get_numeric_value((yyvsp[0].string), symbol_table);
+                                                                } else {
+                                                                    char a_buffer[40];
+                                                                    snprintf(a_buffer, sizeof(a_buffer),"%s o %s", symbol_type_names[VARIABLE], symbol_type_names[CONSTANTE]);
+                                                                    wrong_type_error((yyvsp[0].string), "constante ni una variable");
+                                                                    YYERROR;
+                                                                }
+                                                            } else {
+                                                                undeclared_id_error((yyvsp[0].string));
+                                                                YYERROR;
+                                                            }
+                                                         }
+#line 1492 "parser.c"
+    break;
+
+  case 16:
+#line 135 "parser.y"
+          {(yyval.num) = (yyvsp[0].num);}
+#line 1498 "parser.c"
+    break;
+
+  case 17:
+#line 136 "parser.y"
+                              {(yyval.num) = (yyvsp[-2].num) + (yyvsp[0].num);}
+#line 1504 "parser.c"
+    break;
+
+  case 18:
+#line 137 "parser.y"
+                              {(yyval.num) = (yyvsp[-2].num) - (yyvsp[0].num);}
+#line 1510 "parser.c"
+    break;
+
+  case 19:
+#line 138 "parser.y"
+                              {(yyval.num) = (yyvsp[-2].num) * (yyvsp[0].num);}
+#line 1516 "parser.c"
+    break;
+
+  case 20:
+#line 139 "parser.y"
+                              {(yyval.num) = (yyvsp[-2].num) / (yyvsp[0].num);}
+#line 1522 "parser.c"
+    break;
+
+  case 21:
+#line 140 "parser.y"
+                              {(yyval.num) = pow((yyvsp[-2].num), (yyvsp[0].num));}
+#line 1528 "parser.c"
+    break;
+
+  case 22:
+#line 141 "parser.y"
+                             {(yyval.num) = -(yyvsp[0].num);}
+#line 1534 "parser.c"
+    break;
+
+  case 23:
+#line 142 "parser.y"
+                                        {(yyval.num) = (yyvsp[-1].num);}
+#line 1540 "parser.c"
+    break;
+
   case 24:
-#line 77 "parser.y"
-                                                  {(yyval.num) = (*get_function)((yyvsp[-3].string), symbol_table)((yyvsp[-1].num));}
-#line 1478 "parser.c"
+#line 143 "parser.y"
+                                                  {
+                                                    if (id_declared((yyvsp[-3].string), symbol_table)) {
+                                                        if(get_entry_type((yyvsp[-3].string), symbol_table) == FUNCION) {
+                                                            (yyval.num) = (*get_function)((yyvsp[-3].string), symbol_table)((yyvsp[-1].num));
+                                                        } else {
+                                                            wrong_type_error((yyvsp[-3].string), symbol_type_names[FUNCION]);
+                                                            YYERROR;
+                                                        }
+                                                    } else {
+                                                        undeclared_id_error((yyvsp[-3].string));
+                                                        YYERROR;
+                                                    }
+                                                  }
+#line 1558 "parser.c"
     break;
 
 
-#line 1482 "parser.c"
+#line 1562 "parser.c"
 
       default: break;
     }
@@ -1710,7 +1790,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 79 "parser.y"
+#line 156 "parser.y"
 
 
 void yyerror(const char *s){

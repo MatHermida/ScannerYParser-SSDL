@@ -1,15 +1,20 @@
-    %code top{
+%code requires {
+    #include "parser.h"
+}
+
+%code top{
 #include <stdio.h>
 #include <strings.h>
 #include <math.h>
+#include <string.h>
 #include "scanner.h"
 #include "calc.h"
-
 }
 
 %code provides {
     void yyerror(const char *);
     extern int yylexerrs;
+    char errorBuf[100];
 }
 
 %defines "parser.h"
@@ -59,13 +64,74 @@ Sentencia : Declaracion FDL {printf("\n");};
     | error FDL {printf("\n");}
     | FDL
     ;
-Declaracion : VAR IDENTIFICADOR {YYERROR;}
-    | VAR IDENTIFICADOR '=' Expresion {declare_numeric_symbol($2, $4, VARIABLE, &symbol_table);}
-    | CTE IDENTIFICADOR '=' Expresion {printf("Declarado '%s' como constante.\n", $2);}
-    ;
-Expresion : IDENTIFICADOR ASIGNACION_COMPUESTA Expresion {printf("Asignacion compuesta '%s'\n", $2);}
-    | IDENTIFICADOR '=' Expresion {printf("Asignacion\n");}
-    | IDENTIFICADOR {$$ = get_numeric_value($1, symbol_table);}    
+Declaracion : VAR IDENTIFICADOR                    {
+                                                            if (!id_declared($2, symbol_table)) {
+                                                                declare_numeric_symbol($2, 0, VARIABLE, &symbol_table);
+                                                            } else {
+                                                                already_declared_error($2);
+                                                            }
+                                                            
+                                                         }
+    | VAR IDENTIFICADOR '=' Expresion                    {
+                                                            if (!id_declared($2, symbol_table)) {
+                                                                declare_numeric_symbol($2, $4, VARIABLE, &symbol_table);
+                                                            } else {
+                                                                already_declared_error($2);
+                                                            }
+                                                            
+                                                         }
+    | CTE IDENTIFICADOR '=' Expresion                    {
+                                                            if (!id_declared($2, symbol_table)) {
+                                                                declare_numeric_symbol($2, $4, CONSTANTE, &symbol_table);
+                                                            } else {
+                                                                already_declared_error($2);
+                                                            }
+                                                            
+                                                         }
+                                                        
+Expresion : IDENTIFICADOR ASIGNACION_COMPUESTA Expresion {
+                                                            if (id_declared($1, symbol_table)) {
+                                                                if(get_entry_type($1, symbol_table) == VARIABLE) {
+                                                                    compose_reassign_entry_value_double($1, $2, $3, &symbol_table);
+                                                                    $$ = get_numeric_value($1, symbol_table);
+                                                                } else {
+                                                                    wrong_type_error($1, symbol_type_names[VARIABLE]);
+                                                                    YYERROR;
+                                                                }
+                                                            } else {
+                                                                undeclared_id_error($1);
+                                                                YYERROR;
+                                                            }
+                                                         }
+    | IDENTIFICADOR '=' Expresion                        {
+                                                            if (id_declared($1, symbol_table)) {
+                                                                if(get_entry_type($1, symbol_table) == VARIABLE) {
+                                                                    reassign_entry_value_double($1, $3, &symbol_table);
+                                                                    $$ = $3;
+                                                                } else {
+                                                                    wrong_type_error($1, symbol_type_names[VARIABLE]);
+                                                                    YYERROR;
+                                                                }
+                                                            } else {
+                                                                undeclared_id_error($1);
+                                                                YYERROR;
+                                                            }
+                                                         }
+    | IDENTIFICADOR                                      {
+                                                            if (id_declared($1, symbol_table)) {
+                                                                if (get_entry_type($1, symbol_table) != FUNCION) {
+                                                                    $$ = get_numeric_value($1, symbol_table);
+                                                                } else {
+                                                                    char a_buffer[40];
+                                                                    snprintf(a_buffer, sizeof(a_buffer),"%s o %s", symbol_type_names[VARIABLE], symbol_type_names[CONSTANTE]);
+                                                                    wrong_type_error($1, "constante ni una variable");
+                                                                    YYERROR;
+                                                                }
+                                                            } else {
+                                                                undeclared_id_error($1);
+                                                                YYERROR;
+                                                            }
+                                                         }    
     | NUM {$$ = $1;}
     | Expresion '+' Expresion {$$ = $1 + $3;}
     | Expresion '-' Expresion {$$ = $1 - $3;}
@@ -74,8 +140,19 @@ Expresion : IDENTIFICADOR ASIGNACION_COMPUESTA Expresion {printf("Asignacion com
     | Expresion '^' Expresion {$$ = pow($1, $3);}
     | '-'Expresion %prec NEG {$$ = -$2;}
     | '('Expresion')' %prec PARENTHESIS {$$ = $2;}        
-    | IDENTIFICADOR'('Expresion')' %prec FUNCTION {$$ = (*get_function)($1, symbol_table)($3);}
-    ;
+    | IDENTIFICADOR'('Expresion')' %prec FUNCTION {
+                                                    if (id_declared($1, symbol_table)) {
+                                                        if(get_entry_type($1, symbol_table) == FUNCION) {
+                                                            $$ = (*get_function)($1, symbol_table)($3);
+                                                        } else {
+                                                            wrong_type_error($1, symbol_type_names[FUNCION]);
+                                                            YYERROR;
+                                                        }
+                                                    } else {
+                                                        undeclared_id_error($1);
+                                                        YYERROR;
+                                                    }
+                                                  }
 %%
 
 void yyerror(const char *s){

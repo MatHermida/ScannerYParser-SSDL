@@ -43,6 +43,12 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 1 "parser.y"
+
+    #include "parser.h"
+
+#line 52 "parser.h"
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -69,13 +75,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 19 "parser.y"
+#line 24 "parser.y"
 
     double num;
     char* string;
     char charac;
 
-#line 79 "parser.h"
+#line 85 "parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -88,11 +94,12 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 /* "%code provides" blocks.  */
-#line 10 "parser.y"
+#line 14 "parser.y"
 
     void yyerror(const char *);
     extern int yylexerrs;
+    char errorBuf[100];
 
-#line 97 "parser.h"
+#line 104 "parser.h"
 
 #endif /* !YY_YY_PARSER_H_INCLUDED  */
