@@ -1,11 +1,10 @@
 #include <math.h>
-
+#include <stdbool.h>
 typedef enum symbol_type {VARIABLE, CONSTANTE, FUNCION} symbol_type;
 char *symbol_type_names[3];
 typedef struct table_entry {
     char id[512];
-    double value;
-    double (*function_pointer)(double);
+    void* value;
     symbol_type type; // Constante, variable o funcion
 } table_entry;
 typedef struct table_node {
@@ -15,6 +14,8 @@ typedef struct table_node {
 
 table_node * symbol_table;
 
+bool id_declared(char*, struct table_node *);
+symbol_type get_entry_type(char *, table_node *);
 void add_table_entry(struct table_entry, struct table_node **);
 void add_table_function_entry(struct table_entry, struct table_node **);
 table_node * initial_table();

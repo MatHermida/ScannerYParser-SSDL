@@ -11,9 +11,10 @@ void print_table(table_node * table) {
     {
         table_entry * data = current -> data;
         if (data -> type == FUNCION) {
-            printf("Funcion %s\n", data -> id);
+            printf("Funcion %s\n", (char *)(data -> id));
         } else {
-            printf("ID: %s, VALOR: %f, TIPO: %s\n", data->id, data->value, symbol_type_names[data->type]);
+            double * value = (double *)data->value;
+            printf("ID: %s, VALOR: %f, TIPO: %s\n", data->id, *value, symbol_type_names[data->type]);
         }
         
         current = current -> next;
@@ -56,9 +57,13 @@ int main() {
     // }
 
     double (*seno)(double) = (get_function("sin", symbol_table));
-    printf("%f\n", (*seno)(M_PI/2));
-    printf("%f\n", (*seno)(M_PI));
     //print_table(symbol_table);
+    printf("%d\n", id_declared("e", symbol_table));
+    printf("%d\n", id_declared("asdf", symbol_table));
+    printf("%d\n", id_declared("pi", symbol_table));
+    printf("%d\n", get_entry_type("pi", symbol_table));
+    printf("%d\n", get_entry_type("pi", symbol_table));
+    printf("%d\n", get_entry_type("sin", symbol_table));
     // printf("%f\n", get_numeric_value("e", symbol_table));
     // printf("%f\n", get_numeric_value("pi", symbol_table));
 }
