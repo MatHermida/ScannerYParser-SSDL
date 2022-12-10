@@ -6,7 +6,7 @@ Token: 'NL'
 Token: var		
 Token: Identificador 	 	 lexema: b
 Token: '='
-Token: Real 	 	 lexema: 2.3
+Token: Numero 	 	 lexema: 2.3
 Token: 'NL'
 Token: var		
 Token: Identificador 	 	 lexema: a
@@ -16,20 +16,20 @@ Token: Identificador 	 	 lexema: log
 Token: 'NL'
 Token: Identificador 	 	 lexema: a
 Token: '='
-Token: Entero 	 	 lexema: 3
+Token: Numero 	 	 lexema: 3
 Token: '+'
 Token: Identificador 	 	 lexema: b
 Token: '*'
-Token: Entero 	 	 lexema: 2
+Token: Numero 	 	 lexema: 2
 Token: 'NL'
 Token: cte		
 Token: Identificador 	 	 lexema: k
 Token: '='
-Token: Real 	 	 lexema: 1.2
+Token: Numero 	 	 lexema: 1.2
 Token: 'NL'
 Token: Identificador 	 	 lexema: k
 Token: '^'
-Token: Entero 	 	 lexema: 3
+Token: Numero 	 	 lexema: 3
 Token: 'NL'
 Token: Identificador 	 	 lexema: e
 Token: 'NL'
@@ -37,14 +37,14 @@ Token: Identificador 	 	 lexema: sin
 Token: '('
 Token: Identificador 	 	 lexema: pi
 Token: '/'
-Token: Entero 	 	 lexema: 2
+Token: Numero 	 	 lexema: 2
 Token: ')'
 Token: 'NL'
 Token: Identificador 	 	 lexema: a
 Token: '='
 Token: Identificador 	 	 lexema: b
 Token: +=		
-Token: Entero 	 	 lexema: 1
+Token: Numero 	 	 lexema: 1
 Token: 'NL'
 Token: Identificador 	 	 lexema: a
 Token: 'NL'
@@ -52,18 +52,18 @@ Token: Identificador 	 	 lexema: b
 Token: 'NL'
 Token: Identificador 	 	 lexema: k
 Token: '='
-Token: Entero 	 	 lexema: 3
+Token: Numero 	 	 lexema: 3
 Token: 'NL'
 Token: '('
-Token: Entero 	 	 lexema: 2
+Token: Numero 	 	 lexema: 2
 Token: '+'
-Token: Entero 	 	 lexema: 3
+Token: Numero 	 	 lexema: 3
 Token: ')'
 Token: '*'
 Token: '-'
 Token: Identificador 	 	 lexema: k
 Token: 'NL'
-Token: Real 	 	 lexema: 13.25
+Token: Numero 	 	 lexema: 13.25
 Token: 'NL'
 Error lexico: Constante invalida: 12a3		
 Token: 'NL'
@@ -75,20 +75,20 @@ Error lexico: Cadena desconocida: @@#;@
 Token: 'NL'
 Token: Identificador 	 	 lexema: a
 Token: '+'
-Token: Entero 	 	 lexema: 2
+Token: Numero 	 	 lexema: 2
 Token: 'NL'
 Token: Identificador 	 	 lexema: a
 Token: '='
 Token: Identificador 	 	 lexema: z
 Token: '+'
-Token: Entero 	 	 lexema: 2
+Token: Numero 	 	 lexema: 2
 Token: 'NL'
 Token: Identificador 	 	 lexema: a
 Token: 'NL'
-Token: Entero 	 	 lexema: 2
+Token: Numero 	 	 lexema: 2
 Token: '*'
 Token: '*'
-Token: Entero 	 	 lexema: 3
+Token: Numero 	 	 lexema: 3
 Token: 'NL'
 Token: salir		
 Token: 'NL'
