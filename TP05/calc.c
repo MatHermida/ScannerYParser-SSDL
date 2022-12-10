@@ -174,18 +174,18 @@ void declare_numeric_symbol(char * id, double value, symbol_type type , table_no
 }
 
 
-// void undeclared_id_error(char * id) {
-//     snprintf(errorBuf, sizeof(errorBuf)," ID '%s' no declarado.", id);
-//     yyerror(errorBuf);
-// }
+void undeclared_id_error(char * id) {
+    snprintf(errorBuf, sizeof(errorBuf)," ID '%s' no declarado.", id);
+    yyerror(errorBuf);
+}
 
-// void wrong_type_error(char * id, char * actual_type) {
-//     snprintf(errorBuf, sizeof(errorBuf),"'%s' no es una %s.", id, actual_type);
-//     yyerror(errorBuf);
-// }
+void wrong_type_error(char * id, char * actual_type) {
+    snprintf(errorBuf, sizeof(errorBuf),"'%s' no es una %s.", id, actual_type);
+    yyerror(errorBuf);
+}
 
-// void already_declared_error(char * id) {
-//     snprintf(errorBuf, sizeof(errorBuf)," ID '%s' ya ha sido declarado.", id);
-//     yyerror(errorBuf);
-// }
+void already_declared_error(char * id) {
+    snprintf(errorBuf, sizeof(errorBuf)," ID '%s' ya ha sido declarado.", id);
+    yyerror(errorBuf);
+}
 
