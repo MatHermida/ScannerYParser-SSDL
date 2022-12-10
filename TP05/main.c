@@ -4,6 +4,16 @@
 #include "parser.h"
 #include "calc.h"
 
+/*
+Sintaxis y Semantica de los Lenguajes
+Grupo 02
+Integrantes:
+ - Juan Pablo Castiglione
+ - Matias Kalomysky
+ - Matias Hermida
+ - Santiago Morel
+*/
+
 int main() {
 	symbol_table = initial_table();
 	// Habiamos pensado en hacer que la tabla de simbolos fuera una variable global para referenciarla
