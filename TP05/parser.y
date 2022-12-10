@@ -74,6 +74,7 @@ Declaracion : VAR IDENTIFICADOR                    {
                                                          }
     | VAR IDENTIFICADOR '=' Expresion                    {
                                                             if (!id_declared($2, symbol_table)) {
+                                                                printf("%s: %f\n", $2, $4);
                                                                 declare_numeric_symbol($2, $4, VARIABLE, &symbol_table);
                                                             } else {
                                                                 already_declared_error($2);
@@ -82,6 +83,7 @@ Declaracion : VAR IDENTIFICADOR                    {
                                                          }
     | CTE IDENTIFICADOR '=' Expresion                    {
                                                             if (!id_declared($2, symbol_table)) {
+                                                                printf("%s: %f\n", $2, $4);
                                                                 declare_numeric_symbol($2, $4, CONSTANTE, &symbol_table);
                                                             } else {
                                                                 already_declared_error($2);
