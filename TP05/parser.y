@@ -51,8 +51,8 @@
 
 %%
 
-calculadora: listaDeSentencias FIN_CALCULADORA {return 0;}
-    | FIN_CALCULADORA {return 0;}
+calculadora: listaDeSentencias FIN_CALCULADORA {clear_table(&symbol_table); return 0;}
+    | FIN_CALCULADORA {clear_table(&symbol_table); return 0;}
     ;
 
 listaDeSentencias : listaDeSentencias Sentencia 
