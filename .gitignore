@@ -5,6 +5,7 @@ desktop.ini
 TP02/desktop.ini
 TP03/desktop.ini
 TP04/*
+TP05/*
 !TP04/scanner.l
 !TP04/parser.y
 !TP04/main.c
