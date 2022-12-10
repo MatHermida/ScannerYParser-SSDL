@@ -1,0 +1,74 @@
+> a
+línea #2:  ID 'a' no declarado.
+
+> var a
+a: 0
+
+> var b = 2.3
+b: 2.300000
+
+> var a
+línea #5:  ID 'a' ya ha sido declarado.
+
+> cte log = 0
+línea #6:  ID 'log' ya ha sido declarado.
+
+> a = 3 + b*2
+7.600000
+
+> cte k = 1.2
+k: 1.200000
+
+> k^3
+1.728000
+
+> e
+2.718282
+
+> sin(pi/2)
+1.000000
+
+> a = b += 1
+3.300000
+
+> a
+3.300000
+
+> b
+3.300000
+
+> k = 3
+línea #15: 'k' no es una Variable.
+
+> (2+3) * -k
+-6.000000
+
+> 13.25
+13.250000
+
+> 12a3
+línea #17: Error léxico, constante inválida, valor: 12a3
+
+> a#2.4
+línea #18: Error léxico, identificador invalido, valor: a#2.4
+
+> 2.3.4a2.3
+línea #19: Error léxico, constante inválida, valor: 2.3.4a2.3
+
+> @@#;@
+línea #20: Error léxico, cadena desconocida, valor: @@#;@
+
+> a + 2
+5.300000
+
+> a = z + 2
+línea #22:  ID 'z' no declarado.
+
+> a
+3.300000
+
+> 2 * * 3
+línea #24: syntax error, unexpected '*', expecting IDENTIFICADOR or NUM or '-' or '('
+
+> salir
+
