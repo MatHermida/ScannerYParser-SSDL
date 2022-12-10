@@ -39,6 +39,7 @@ void add_table_entry(table_entry new_entry, struct table_node ** table) {
     strcpy(new_node -> data -> id, new_entry.id);
     new_node -> data -> type = new_entry.type;
     new_node -> data -> value = new_entry.value;
+    new_node -> data -> function_pointer = new_entry.function_pointer;
     
     if (*table) {
         table_node * current = *table;
@@ -132,7 +133,7 @@ double get_numeric_value(char* id, struct table_node* table) {
 
 double (*get_function(char * function_id, table_node* table))(double) {
     table_node * table_pointer = table;
-    while (table_pointer -> next != NULL && strcmp(table_pointer -> data -> id, function_id))
+    while (table_pointer != NULL && strcmp(table_pointer -> data -> id, function_id))
     {
         table_pointer = table_pointer -> next;
     }

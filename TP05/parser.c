@@ -1544,7 +1544,8 @@ yyreduce:
                                                   {
                                                     if (id_declared((yyvsp[-3].string), symbol_table)) {
                                                         if(get_entry_type((yyvsp[-3].string), symbol_table) == FUNCION) {
-                                                            (yyval.num) = (*get_function)((yyvsp[-3].string), symbol_table)((yyvsp[-1].num));
+                                                            double (*f)(double) = get_function((yyvsp[-3].string), symbol_table);
+                                                            (yyval.num) = f((yyvsp[-1].num));
                                                         } else {
                                                             wrong_type_error((yyvsp[-3].string), symbol_type_names[FUNCION]);
                                                             YYERROR;
@@ -1554,11 +1555,11 @@ yyreduce:
                                                         YYERROR;
                                                     }
                                                   }
-#line 1558 "parser.c"
+#line 1559 "parser.c"
     break;
 
 
-#line 1562 "parser.c"
+#line 1563 "parser.c"
 
       default: break;
     }
@@ -1790,7 +1791,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 156 "parser.y"
+#line 157 "parser.y"
 
 
 void yyerror(const char *s){

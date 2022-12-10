@@ -143,7 +143,8 @@ Expresion : IDENTIFICADOR ASIGNACION_COMPUESTA Expresion {
     | IDENTIFICADOR'('Expresion')' %prec FUNCTION {
                                                     if (id_declared($1, symbol_table)) {
                                                         if(get_entry_type($1, symbol_table) == FUNCION) {
-                                                            $$ = (*get_function)($1, symbol_table)($3);
+                                                            double (*f)(double) = get_function($1, symbol_table);
+                                                            $$ = f($3);
                                                         } else {
                                                             wrong_type_error($1, symbol_type_names[FUNCION]);
                                                             YYERROR;

@@ -57,13 +57,8 @@ int main() {
     // }
 
     double (*seno)(double) = (get_function("sin", symbol_table));
+    seno(3.14);
+    seno(3.14/2);
     print_table(symbol_table);
-    printf("%d\n", id_declared("e", symbol_table));
-    printf("%d\n", id_declared("asdf", symbol_table));
-    printf("%d\n", id_declared("pi", symbol_table));
-    printf("%d\n", get_entry_type("pi", symbol_table));
-    printf("%d\n", get_entry_type("pi", symbol_table));
-    printf("%d\n", get_entry_type("sin", symbol_table));
-    // printf("%f\n", get_numeric_value("e", symbol_table));
-    // printf("%f\n", get_numeric_value("pi", symbol_table));
+
 }
