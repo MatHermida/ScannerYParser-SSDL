@@ -4,8 +4,10 @@ typedef enum symbol_type {VARIABLE, CONSTANTE, FUNCION} symbol_type;
 char *symbol_type_names[3];
 typedef struct table_entry {
     char id[512];
-    double (*function_pointer)(double);
-    double value;
+    union {
+        double value;
+        double (*function_pointer)(double);
+    } data;
     symbol_type type; // Constante, variable o funcion
 } table_entry;
 typedef struct table_node {
@@ -20,6 +22,7 @@ symbol_type get_entry_type(char *, table_node *);
 void add_table_entry(struct table_entry, struct table_node **);
 void add_table_function_entry(struct table_entry, struct table_node **);
 table_node * initial_table();
+void clear_table(table_node **);
 double get_numeric_value(char*, struct table_node*);
 double (*get_function(char *, table_node*))(double);
 void declare_numeric_symbol(char *, double, symbol_type, table_node **);

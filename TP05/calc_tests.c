@@ -6,20 +6,22 @@
 
 void print_table(table_node * table) {
     table_node * current = table;
-    
+    // Iterate over the linked list of table nodes
     while (current != NULL)
     {
-        table_entry * data = current -> data;
-        if (data -> type == FUNCION) {
-            printf("Funcion %s\n", data -> id);
+        // Get the data field of the current table node
+        table_entry * data = current->data;
+        // Check if the type field of the table_entry is FUNCTION
+        if (data->type == FUNCION) {
+            // If it is, print the function id
+            printf("Funcion %s\n", data->id);
         } else {
-            
-            printf("ID: %s, VALOR: %f, TIPO: %s\n", data->id, data -> value, symbol_type_names[data->type]);
+            // Otherwise, print the id, value, and type of the table_entry
+            printf("ID: %s, VALOR: %f, TIPO: %s\n", data->id, data->data.value, symbol_type_names[data->type]);
         }
-        
-        current = current -> next;
+        // Advance to the next table node
+        current = current->next;
     }
-    
 }
 
 int main() {
@@ -60,5 +62,6 @@ int main() {
     seno(3.14);
     seno(3.14/2);
     print_table(symbol_table);
-
+    clear_table(&symbol_table);
+    print_table(symbol_table);
 }

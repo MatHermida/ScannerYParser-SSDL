@@ -6,8 +6,6 @@
 #include "calc.h"
 
 char *symbol_type_names[] = {"Variable", "Constante", "Funcion"};
-double pi = M_PI;
-double e = M_E;
 
 bool id_declared(char* id, table_node * table) {
     table_node * current = table;
@@ -38,8 +36,11 @@ void add_table_entry(table_entry new_entry, struct table_node ** table) {
     new_node -> data = malloc(sizeof(table_entry));
     strcpy(new_node -> data -> id, new_entry.id);
     new_node -> data -> type = new_entry.type;
-    new_node -> data -> value = new_entry.value;
-    new_node -> data -> function_pointer = new_entry.function_pointer;
+    if (new_entry.type == CONSTANTE || new_entry.type == VARIABLE) {
+        new_node -> data -> data.value = new_entry.data.value;
+    } else {
+        new_node -> data -> data.function_pointer = new_entry.data.function_pointer;
+    }
     
     if (*table) {
         table_node * current = *table;
@@ -60,8 +61,8 @@ void reassign_entry_value_double(char * id, double new_value, struct table_node 
     {
         current = current->next;
     }
-
-    current->data->value = new_value;
+    current->data->data.value = new_value;
+    
 }
 
 void compose_reassign_entry_value_double(char * id, char * operator, double new_value, struct table_node ** table) {
@@ -84,35 +85,35 @@ table_node * initial_table() {
     table_node * table = NULL;
     table_entry initial_symbols[] = {
         [0].id = "sin",
-        [0].function_pointer = &sin,
         [0].type = FUNCION,
+        [0].data.function_pointer = &sin,
         [1].id = "cos",
-        [1].function_pointer = &cos,
         [1].type = FUNCION,
+        [1].data.function_pointer = &cos,
         [2].id = "tan",
-        [2].function_pointer = &tan,
         [2].type = FUNCION,
+        [2].data.function_pointer = &tan,
         [3].id = "asin",
-        [3].function_pointer = &asin,
         [3].type = FUNCION,
+        [3].data.function_pointer = &asin,
         [4].id = "acos",
-        [4].function_pointer = &acos,
         [4].type = FUNCION,
+        [4].data.function_pointer = &acos,
         [5].id = "atan",
-        [5].function_pointer = &atan,
         [5].type = FUNCION,
+        [5].data.function_pointer = &atan,
         [6].id = "sqrt",
-        [6].function_pointer = &sqrt,
         [6].type = FUNCION,
+        [6].data.function_pointer = &sqrt,
         [7].id = "log",
-        [7].function_pointer = &log10,
         [7].type = FUNCION,
+        [7].data.function_pointer = &log10,
         [8].id = "e",
-        [8].value = e,
         [8].type = CONSTANTE,
+        [8].data.value = M_E,
         [9].id = "pi",
-        [9].value = pi,
         [9].type = CONSTANTE,
+        [9].data.value = M_PI,
     };
     for (int i = 0; i < 10; i++)
     {
@@ -122,14 +123,35 @@ table_node * initial_table() {
     return table;
 }
 
+void clear_table(table_node ** table) {
+    if (*table == NULL) {
+        
+        return;
+    }
+    table_node * current = *table;
+    table_node * next = current->next;
+    while (next != NULL) {
+        free(current);
+
+        current = next;
+
+        next = current->next;
+    }
+    free(current);
+    *table = NULL;
+}
+
 double get_numeric_value(char* id, struct table_node* table) {
     table_node * table_pointer = table;
     while (table_pointer -> next != NULL && strcmp(table_pointer -> data -> id, id))
     {
         table_pointer = table_pointer -> next;
     }
-    return table_pointer -> data -> value;
-};
+
+    return table_pointer -> data -> data.value;
+
+    return 0;
+}
 
 double (*get_function(char * function_id, table_node* table))(double) {
     table_node * table_pointer = table;
@@ -137,27 +159,33 @@ double (*get_function(char * function_id, table_node* table))(double) {
     {
         table_pointer = table_pointer -> next;
     }
-    return table_pointer -> data -> function_pointer;
-};
+
+    return table_pointer -> data -> data.function_pointer;
+
+}
 
 void declare_numeric_symbol(char * id, double value, symbol_type type , table_node ** table) {
-    table_entry new_entry = {.value=value, .type=type};
+    table_entry new_entry = {.type=type};
     strcpy(new_entry.id, id);
+
+    new_entry.data.value = value;
+
     add_table_entry(new_entry, table);
 }
 
 
-void undeclared_id_error(char * id) {
-    snprintf(errorBuf, sizeof(errorBuf)," ID '%s' no declarado.", id);
-    yyerror(errorBuf);
-}
+// void undeclared_id_error(char * id) {
+//     snprintf(errorBuf, sizeof(errorBuf)," ID '%s' no declarado.", id);
+//     yyerror(errorBuf);
+// }
 
-void wrong_type_error(char * id, char * actual_type) {
-    snprintf(errorBuf, sizeof(errorBuf),"'%s' no es una %s.", id, actual_type);
-    yyerror(errorBuf);
-}
+// void wrong_type_error(char * id, char * actual_type) {
+//     snprintf(errorBuf, sizeof(errorBuf),"'%s' no es una %s.", id, actual_type);
+//     yyerror(errorBuf);
+// }
 
-void already_declared_error(char * id) {
-    snprintf(errorBuf, sizeof(errorBuf)," ID '%s' ya ha sido declarado.", id);
-    yyerror(errorBuf);
-}
+// void already_declared_error(char * id) {
+//     snprintf(errorBuf, sizeof(errorBuf)," ID '%s' ya ha sido declarado.", id);
+//     yyerror(errorBuf);
+// }
+
