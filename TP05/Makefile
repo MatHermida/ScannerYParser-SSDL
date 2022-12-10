@@ -20,4 +20,4 @@ parser.c parser.h: parser.y
 	bison parser.y
 
 clean:
-	rm parser.c scanner.c scanner.h parser.h parser.o scanner.o main.o calc.o main test
+	rm parser.c parser.h parser.o scanner.c scanner.h scanner.o main.o calc.o

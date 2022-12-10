@@ -14,7 +14,7 @@
 %code provides {
     void yyerror(const char *);
     extern int yylexerrs;
-    char errorBuf[100];
+    extern char errorBuf[100];
 }
 
 %defines "parser.h"
@@ -53,6 +53,8 @@
 
 calculadora: listaDeSentencias FIN_CALCULADORA {clear_table(&symbol_table); return 0;}
     | FIN_CALCULADORA {clear_table(&symbol_table); return 0;}
+    | listaDeSentencias YYEOF {clear_table(&symbol_table); return 0;}
+    | YYEOF {clear_table(&symbol_table); return 0;}
     ;
 
 listaDeSentencias : listaDeSentencias Sentencia 
@@ -64,8 +66,10 @@ Sentencia : Declaracion FDL {printf("\n");};
     | error FDL {printf("\n");}
     | FDL
     ;
+    
 Declaracion : VAR IDENTIFICADOR                    {
                                                             if (!id_declared($2, symbol_table)) {
+                                                                printf("%s: 0\n", $2);
                                                                 declare_numeric_symbol($2, 0, VARIABLE, &symbol_table);
                                                             } else {
                                                                 already_declared_error($2);

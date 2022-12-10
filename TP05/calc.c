@@ -7,6 +7,8 @@
 
 char *symbol_type_names[] = {"Variable", "Constante", "Funcion"};
 
+table_node * symbol_table;
+
 bool id_declared(char* id, table_node * table) {
     table_node * current = table;
     
@@ -188,4 +190,3 @@ void already_declared_error(char * id) {
     snprintf(errorBuf, sizeof(errorBuf)," ID '%s' ya ha sido declarado.", id);
     yyerror(errorBuf);
 }
-

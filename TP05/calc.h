@@ -1,7 +1,7 @@
 #include <math.h>
 #include <stdbool.h>
 typedef enum symbol_type {VARIABLE, CONSTANTE, FUNCION} symbol_type;
-char *symbol_type_names[3];
+extern char *symbol_type_names[3];
 typedef struct table_entry {
     char id[512];
     union {
@@ -15,7 +15,7 @@ typedef struct table_node {
     struct table_node* next;
 } table_node;
 
-table_node * symbol_table;
+extern table_node * symbol_table;
 
 bool id_declared(char*, struct table_node *);
 symbol_type get_entry_type(char *, table_node *);
