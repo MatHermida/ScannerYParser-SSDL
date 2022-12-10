@@ -1,0 +1,57 @@
+Declarado 'a' como variable.
+
+Numero
+Declarado 'b' como variable con valor inicial.
+
+línea #4: syntax error, unexpected FDL, expecting '='
+
+Numero
+Declarado 'k' como constante.
+
+Numero
+Identificador
+Numero
+Multiplicacion
+Suma
+Asignacion
+Expresion
+
+Identificador
+Numero
+Potencia
+Expresion
+
+Identificador
+Numero
+Division
+Funcion
+Expresion
+
+Numero
+Asignacion compuesta '+='
+Asignacion
+Expresion
+
+Numero
+Numero
+Suma
+Parentesis
+Identificador
+Cambio de signo
+Multiplicacion
+Expresion
+
+Numero
+Expresion
+
+línea #11: Error léxico, constante inválida, valor: 12a3
+
+línea #12: Error léxico, identificador invalido, valor: a#2.4
+
+línea #13: Error léxico, constante inválida, valor: 2.3.4a2.3
+
+línea #14: Error léxico, cadena desconocida, valor: @@#;@
+
+Numero
+línea #15: syntax error, unexpected '*', expecting IDENTIFICADOR or NUM or '-' or '('
+
