@@ -4,6 +4,8 @@
 #include <string.h>
 #include "calc.h"
 
+// ARCHIVO SOLAMENTE USADO PARA TESTEOS RAPIDOS
+
 void print_table(table_node * table) {
     table_node * current = table;
     // Iterate over the linked list of table nodes
