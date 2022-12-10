@@ -4,7 +4,7 @@ main: calc.o main.o scanner.o parser.o
 main.o: main.c scanner.c parser.c calc.c
 	gcc -c main.c
 
-calc.o: calc.c
+calc.o: calc.c parser.h
 	gcc -c calc.c
 
 scanner.o: scanner.c parser.h

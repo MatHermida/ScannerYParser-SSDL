@@ -9,3 +9,9 @@ TP04/*
 !TP04/parser.y
 !TP04/main.c
 !TP04/Makefile
+!TP04/scanner.l
+!TP04/parser.y
+!TP05/calc.c
+!TP05/calc.h
+!TP04/main.c
+!TP04/Makefile
