@@ -53,8 +53,6 @@
 
 calculadora: listaDeSentencias FIN_CALCULADORA {clear_table(&symbol_table); return 0;}
     | FIN_CALCULADORA {clear_table(&symbol_table); return 0;}
-    | listaDeSentencias YYEOF {clear_table(&symbol_table); return 0;}
-    | YYEOF {clear_table(&symbol_table); return 0;}
     ;
 
 listaDeSentencias : listaDeSentencias Sentencia 
