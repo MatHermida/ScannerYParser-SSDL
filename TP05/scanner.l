@@ -26,7 +26,8 @@ espacios [[:space:]]{-}[\n]
 
 \n                                                      {yylval.charac = yytext[0]; return FDL;}
 {espacios}+                                               ;
-salir                                                   {return FIN_CALCULADORA;}
+salir                                                   |
+<<EOF>>                                                 {return FIN_CALCULADORA;}
 var                                                     {yylval.string = strdup(yytext); return VAR;}
 cte                                                     {yylval.string = strdup(yytext); return CTE;}
 {letter}({letter}|{digit})*{otros}({otros}|{letter}|{digit})*   {snprintf(errorBuf, sizeof(errorBuf),"Error léxico, identificador invalido, valor: %s\n", yytext);yyerror(errorBuf);}
